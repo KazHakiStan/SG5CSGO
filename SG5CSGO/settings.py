@@ -41,6 +41,8 @@ INSTALLED_APPS = [
     'grenade_type_app',
     'grenades_app',
     'profile_app',
+    'publication_app',
+    'media_app',
 ]
 
 MIDDLEWARE = [
