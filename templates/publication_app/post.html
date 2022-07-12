@@ -23,6 +23,33 @@
                 <p class="article-content">{{ posts.text }}</p>
             </div>
         </div>
+        <div class="etc">
+            <p>Теги:
+                {% for tag in posts.tag.all %}
+                    {{ tag.tag }},
+                {% endfor %}</p>
+            {% if posts.user_id == user.pk %}
+                <p align="right">
+                    <a href="{% url 'post_red' posts.pk %}"><button type="button" class="btn btn-warning">Редактировать пост</button></a>
+                    <a href="{% url 'post_del' posts.pk %}"><button type="button" class="btn btn-danger">Удалить пост</button></a>
+                </p>
+            {% endif %}
+            <p>Комментарии:</p>
+            {% for comment in posts.post_comment.all %}
+                {% if comment.user.profile.photo %}
+                    <img src="{{ comment.user.profile.photo.url }}" style="border-radius:15px" alt="" width="30px" height="30px" >
+                {% endif %}
+                <b>{{ comment.user }}</b>: {{ comment }}<br>
+                <br>
+            {% endfor %}
+            <form method="post">
+                <div class="form-floating">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <input type="submit" value="Добавить комментарий">
+                </div>
+            </form>
+        </div>
     </div>
 </article>
 {% endblock %}

@@ -4,6 +4,7 @@ from django.db import models
 from django.urls import reverse
 
 from media_app.models import Media
+from tags_app.models import Tag
 
 
 class Post(models.Model):
@@ -13,6 +14,7 @@ class Post(models.Model):
     is_public = models.BooleanField(default=True, null=True)
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     file = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
+    tag = models.ManyToManyField(Tag, blank=True, related_name='tag_post')
 
     def __str__(self):
         return f'{self.id}.{self.title}'

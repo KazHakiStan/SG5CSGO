@@ -3,6 +3,7 @@ from django.shortcuts import render
 from django.views import View
 
 from publication_app.models import Post
+from tags_app.models import Tag
 
 
 class Posts(View):
@@ -10,6 +11,7 @@ class Posts(View):
     @staticmethod
     def get(request):
         users = []
+        tags = Tag.objects.all()
         posts = Post.objects.filter(is_public=True)
         if posts:
 
@@ -20,6 +22,7 @@ class Posts(View):
                 'title': "Посты",
                 'name_text': 'Публикации друзей и фолловеров',
                 'posts': posts,
+                'tag': tags,
                 'information': None,
                 'page_obj': page_obj
             }

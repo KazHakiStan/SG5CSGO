@@ -40,6 +40,9 @@ class AddPost(View):
                     image=file
                 )
 
+            for tag in tags:
+                post_obj.tag.add(tag)
+
             return redirect('posts')
 
         else:

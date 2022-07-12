@@ -43,6 +43,9 @@ INSTALLED_APPS = [
     'profile_app',
     'publication_app',
     'media_app',
+    'menu_app',
+    'comments_app',
+    'tags_app',
 ]
 
 MIDDLEWARE = [

@@ -15,4 +15,4 @@ class EditPostForm(forms.ModelForm):
 
     class Meta:
         model = Post
-        fields = ['title', 'text', 'is_public', ]
+        fields = ['title', 'text', 'is_public', 'tag']
