@@ -8,12 +8,10 @@
                 <button type="button" class="btn btn-info">Редактирование профиля</button>
             </a>
         </p>
-            <p>Аватар:</p>
         {% if request.user.profile.photo %}
-
             <img src="{{ request.user.profile.photo.url }}" alt="" width="250px" height="250px">
         {% else %}
-            <img src="/static/image/avatar_icon.jpg" alt="" width="250px" height="250px">
+            <img src="/media/staff/avatar_icon.png" alt="" width="250px" height="250px">
         {% endif %}
             <p><b>Имя:</b> {{request.user.first_name}}</p>
             <p><b>Фамилия:</b> {{request.user.last_name}}</p>
@@ -26,7 +24,7 @@
                         {% if friend.receiver.profile.photo %}
                             <img src="{{ friend.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                         {% else %}
-                            <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
+                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                         {% endif %}
                         <a href="{% url 'profile' friend.receiver.pk%}">
                             {{ friend.receiver }}
@@ -37,7 +35,7 @@
                         {% if friend.sender.profile.photo%}
                             <img src="{{ friend.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                         {% else %}
-                            <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
+                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                         {% endif %}
                         <a href="{% url 'profile' friend.sender.pk%}">
                             {{ friend.sender }}
@@ -56,7 +54,7 @@
                     {% if sub.receiver.profile.photo%}
                         <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                     {% else %}
-                        <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
+                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                     {% endif %}
                     <a href="{% url 'profile' sub.receiver.pk%}">
                         {{ sub.receiver }}
@@ -71,7 +69,7 @@
                     {% if wait.sender.profile.photo %}
                         <img src="{{ wait.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                     {% else %}
-                        <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
+                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                     {% endif %}
                     <a href="{% url 'profile' wait.sender.pk%}">
                         {{ wait.sender }}

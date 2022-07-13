@@ -16,7 +16,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     file = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
     tag = models.ManyToManyField(Tag, blank=True, related_name='tag_post')
-    likes = GenericRelation(Like)
+    likes = models.ManyToManyField(User, related_name='post_like')
 
     def __str__(self):
         return f'{self.id}.{self.title}'

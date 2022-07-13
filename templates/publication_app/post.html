@@ -4,6 +4,15 @@
 <article class="alert alert-secondary">
     <div class="media-body" style="color: black">
         <h2>Мэм: {{ posts.title }}</h2>
+        {% if user.posts.is_fan %}
+            <button type="button" class="btn btn-danger">{{ posts.total_likes }}</button>
+        {% else %}
+            <form action="{% url 'like_post' posts.pk %}" method="POST">
+            {% csrf_token %}
+                <button type="submit" name="post_id" value="{{ posts.id }}" class="btn btn-sm btn-outline-secondary">{{ posts.total_likes }}</button>
+            </form>
+            <a href="{{ user.posts.add_like }}"></a>
+        {% endif %}
         <div class="article-metadata" style="display: inline-block">
             <div class="author" style="display: inline-block">
                 <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>

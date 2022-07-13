@@ -1,36 +1,38 @@
 from django.contrib.auth import get_user_model
 from django.contrib.contenttypes.models import ContentType
+from django.http import HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.urls import reverse
+
+from publication_app.models import Post
 from .models import Like
 
 User = get_user_model()
 
 
-def add_like(obj, user):
+def add_like(request, pk):
     """Лайкает `obj`.
     """
-    obj_type = ContentType.objects.get_for_model(obj)
-    like, is_created = Like.objects.get_or_create(
-        content_type=obj_type, object_id=obj.id, user=user)
-    return like
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.add(request.user)
+    return HttpResponseRedirect(reverse('posts'))
 
 
-def remove_like(obj, user):
+def remove_like(request, pk):
     """Удаляет лайк с `obj`.
     """
-    obj_type = ContentType.objects.get_for_model(obj)
-    Like.objects.filter(
-        content_type=obj_type, object_id=obj.id, user=user
-    ).delete()
+    post = get_object_or_404(Post, id=request.POST.get('post_id'))
+    post.likes.delete(request.user)
+    return HttpResponseRedirect(reverse('posts'))
 
 
-def is_fan(obj, user) -> bool:
+def is_fan(request, pk) -> bool:
     """Проверяет, лайкнул ли `user` `obj`.
     """
-    if not user.is_authenticated:
+    if not request.user.is_authenticated:
         return False
-    obj_type = ContentType.objects.get_for_model(obj)
-    likes = Like.objects.filter(
-        content_type=obj_type, object_id=obj.id, user=user)
+    likes = Post.objects.likes.filter(pk=pk)
+
     return likes.exists()
 
 

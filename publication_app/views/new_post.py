@@ -6,6 +6,7 @@ from publication_app.models import Post, ImagePost
 
 
 class AddPost(View):
+
     @staticmethod
     def get(request):
         form = ImagePostForm()
@@ -23,7 +24,12 @@ class AddPost(View):
         form = ImagePostForm(request.POST or None, request.FILES or None)
         files = request.FILES.getlist('image')
         if len(files) > 4:
-            raise Exception("Я вам запрещаю прикреплять больше 4ех картинок")
+            context = {
+                'form': form,
+                'files': files,
+                'Error': 'Я вам запрещаю прикреплять больше 4ех картинок'
+            }
+            return render(request, 'publication_app/editing.html', context)
 
         if form.is_valid():
             tags = form.cleaned_data.get('tag')
