@@ -3,6 +3,7 @@ from django.contrib.contenttypes.fields import GenericRelation
 from django.db import models
 from django.urls import reverse
 
+from likes_app.models import Like
 from media_app.models import Media
 from tags_app.models import Tag
 
@@ -15,6 +16,7 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     file = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
     tag = models.ManyToManyField(Tag, blank=True, related_name='tag_post')
+    likes = GenericRelation(Like)
 
     def __str__(self):
         return f'{self.id}.{self.title}'
@@ -26,6 +28,10 @@ class Post(models.Model):
         verbose_name = 'Пост'
         verbose_name_plural = 'Посты'
         ordering = ['-created_time', '-id']
+
+    @property
+    def total_likes(self):
+        return self.likes.count()
 
 
 class ImagePost(models.Model):

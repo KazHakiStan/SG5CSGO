@@ -7,7 +7,7 @@ from publication_app.models import ImagePost, Post
 
 
 class EditImagePost(View):
-    ImageFormSet = modelformset_factory(ImagePost, fields={"image", })
+    ImageFormSet = modelformset_factory(ImagePost, fields={"image", }, extra=0, max_num=4)
 
     def get(self, request, pk):
 
@@ -26,6 +26,8 @@ class EditImagePost(View):
     def post(self, request, pk):
         get_post = Post.objects.get(pk=pk)
         get_image = ImagePost.objects.filter(post=get_post)
+        # files = ImagePost.objects.filter(post=get_post).getlist('image')
+        # if len(files) < 4:
 
         post_form = EditPostForm(data=request.POST, instance=get_post)
         form_image = self.ImageFormSet(request.POST or None, request.FILES or None)
@@ -47,3 +49,4 @@ class EditImagePost(View):
                         obj_img.image = image.image
                         obj_img.save()
             return redirect('posts')
+

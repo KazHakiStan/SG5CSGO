@@ -46,6 +46,9 @@ INSTALLED_APPS = [
     'menu_app',
     'comments_app',
     'tags_app',
+    'likes_app',
+    'friends_app',
+    'chat_app',
 ]
 
 MIDDLEWARE = [

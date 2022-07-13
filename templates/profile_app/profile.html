@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h3 style="color: aliceblue">Смешарик {{ users.username }} </h3>
+<h3 style="color: aliceblue">Киберспортсмен: {{ users.username }} </h3>
 
 <div class="row g-4 py-5 row-cols-1 row-cols-lg-2" style="color: aliceblue">
     <div class="feature col">
@@ -27,7 +27,7 @@
             {% else %}
                 <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
             {% endif %}
-            <a href="{% url 'profile_user' friend.receiver.pk%}">
+            <a href="{% url 'profile' friend.receiver.pk%}">
                 {{ friend.receiver }}
             </a>
             </li>
@@ -38,7 +38,7 @@
             {% else %}
                 <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
             {% endif %}
-            <a href="{% url 'profile_user' friend.sender.pk%}">
+            <a href="{% url 'profile' friend.sender.pk%}">
                 {{ friend.sender }}
             </a>
             </li>
@@ -55,7 +55,7 @@
             {% else %}
                 <img src="/static/image/avatar_icon.jpg" style="border-radius:10px" alt="" width="50px" height="50px">
             {% endif %}
-            <a href="{% url 'profile_user' sub.receiver.pk%}">
+            <a href="{% url 'profile' sub.receiver.pk%}">
                 {{ sub.receiver }}
             </a>
         </li>
@@ -75,11 +75,11 @@
         На тебя данный пользователь подписан
     </div>
 
-    {% elif is_follower %}
+    {% elif is_following %}
     <div class="alert alert-info" role="alert">
         Ты подписан на его!
     </div>
-    <a href="{% url 'friendship' action='unsub' pk=users.pk %}">
+    <a href="{% url 'friendship' action='unsubscribe' pk=users.pk %}">
         <button type="button" class="btn btn-danger">Отписка</button>
     </a>
 
@@ -87,7 +87,7 @@
     <a href="{% url 'friendship' action='add' pk=users.pk %}">
         <button type="button" class="btn btn-success">Добавить в друзья </button>
     </a>
-    <a href="{% url 'friendship' action='sub' pk=users.pk %}">
+    <a href="{% url 'friendship' action='subscribe' pk=users.pk %}">
         <button type="button" class="btn btn-primary">Подписаться</button>
     </a>
     {% endif %}
@@ -98,7 +98,7 @@
 <p><b style="color: aliceblue">Имя: {{users.first_name}}</b></p>
 
 <div class="col-md" style="color: aliceblue">
-    <h2>Мэмы пользователя:</h2>
+    <h2>Посты пользователя:</h2>
     <hr>
     {% for user in users.posts.all %}
     <div class="card-body">
