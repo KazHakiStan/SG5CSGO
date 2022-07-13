@@ -19,6 +19,7 @@
                 <details style="color: aliceblue">
                 <summary><b>Список друзей:</b></summary>
                 {% for friend in friends%}
+                    <div style="display: inline-block">
                     {% if friend.sender == users %}
                     <li>
                     {% if friend.receiver.profile.photo %}
@@ -42,22 +43,25 @@
                     </a>
                     </li>
                      {% endif %}
+                    </div>
                 {% endfor %}
             </details>
 
             <details>
                 <summary><b>Подписки:</b></summary>
                 {% for sub in subs%}
-                <li>
-                    {% if sub.receiver.profile.photo %}
-                        <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% else %}
-                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% endif %}
-                    <a href="{% url 'profile' sub.receiver.pk%}">
-                        {{ sub.receiver }}
-                    </a>
-                </li>
+                    <div style="display: inline-block">
+                        <li>
+                            {% if sub.receiver.profile.photo %}
+                                <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                            {% else %}
+                                <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                            {% endif %}
+                            <a href="{% url 'profile' sub.receiver.pk%}">
+                                {{ sub.receiver }}
+                            </a>
+                        </li>
+                    </div>
                 {% endfor %}
             </details>
 
@@ -73,7 +77,22 @@
             <div class="alert alert-info" role="alert">
                 На тебя данный пользователь подписан
             </div>
-
+            <a href="{% url 'friendship' action='add' pk=users.pk %}">
+                <button type="button" class="btn btn-success">Добавить в друзья </button>
+            </a>
+            <a href="{% url 'friendship' action='subscribe' pk=users.pk %}">
+                <button type="button" class="btn btn-primary">Подписаться</button>
+            </a>
+            {% elif is_following and is_subscribed %}
+            <div class="alert alert-info" role="alert">
+                Ты подписан на его!
+            </div>
+            <a href="{% url 'friendship' action='add' pk=users.pk %}">
+                <button type="button" class="btn btn-success">Добавить в друзья </button>
+            </a>
+            <a href="{% url 'friendship' action='unsubscribe' pk=users.pk %}">
+                <button type="button" class="btn btn-danger">Отписка</button>
+            </a>
             {% elif is_following %}
             <div class="alert alert-info" role="alert">
                 Ты подписан на его!
@@ -81,7 +100,6 @@
             <a href="{% url 'friendship' action='unsubscribe' pk=users.pk %}">
                 <button type="button" class="btn btn-danger">Отписка</button>
             </a>
-
             {% else %}
             <a href="{% url 'friendship' action='add' pk=users.pk %}">
                 <button type="button" class="btn btn-success">Добавить в друзья </button>

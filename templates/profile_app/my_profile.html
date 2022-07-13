@@ -8,19 +8,24 @@
                 <button type="button" class="btn btn-info">Редактирование профиля</button>
             </a>
         </p>
+    <div>
+    <div>
+    <div class="feature col" style="display: inline-block; position: relative">
+    <hr>
         {% if request.user.profile.photo %}
             <img src="{{ request.user.profile.photo.url }}" alt="" width="250px" height="250px">
         {% else %}
             <img src="/media/staff/avatar_icon.png" alt="" width="250px" height="250px">
         {% endif %}
-            <p><b>Имя:</b> {{request.user.first_name}}</p>
-            <p><b>Фамилия:</b> {{request.user.last_name}}</p>
-            <p><b>email:</b> {{request.user.email}}</p>
-            <details>
-                <summary><b>Друзья:</b></summary>
+    </div>
+
+    <div class="feature col" style="display: inline-block; margin-left: 500px;">
+            <details open>
+                <summary ><b style="display: inline-block">Друзья:</b></summary>
                 {% for friend in friends%}
+                    <div style="display: inline-block">
                     {% if friend.sender == request.user %}
-                        <li>
+                        <li >
                         {% if friend.receiver.profile.photo %}
                             <img src="{{ friend.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                         {% else %}
@@ -45,21 +50,24 @@
 {#                            <button type="button" class="btn btn-danger">Отклонить запрос</button>#}
 {#                        </a>#}
                     {% endif %}
+                    </div>
                 {% endfor %}
             </details>
             <details>
                 <summary><b>Подписки:</b></summary>
                 {% for sub in subs %}
-                <li>
-                    {% if sub.receiver.profile.photo%}
-                        <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% else %}
-                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% endif %}
-                    <a href="{% url 'profile' sub.receiver.pk%}">
-                        {{ sub.receiver }}
-                    </a>
-                </li>
+                    <div style="display: inline-block">
+                        <li>
+                            {% if sub.receiver.profile.photo%}
+                                <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                            {% else %}
+                                <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                            {% endif %}
+                            <a href="{% url 'profile' sub.receiver.pk%}">
+                                {{ sub.receiver }}
+                            </a>
+                        </li>
+                    </div>
                 {% endfor %}
             </details>
             <details open>
@@ -85,9 +93,18 @@
                  </a>
                 {% endfor %}
             </details>
-            <details>
+    </div>
+
+    </div>
+    </div>
+    <div>
+    <p><b>Имя:</b> {{request.user.first_name}}</p>
+            <p><b>Фамилия:</b> {{request.user.last_name}}</p>
+            <p><b>email:</b> {{request.user.email}}</p>
+    </div>
+            <details open>
                 <div class="col-md" style="color: aliceblue">
-                    <h2>Посты пользователя:</h2>
+                    <summury><h2>Посты пользователя:</h2></summury>
                     <hr>
                     {% for post in posts %}
                         <div class="card-body">
