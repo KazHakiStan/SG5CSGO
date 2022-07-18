@@ -10,15 +10,15 @@
 
     {% if information %}
     <h2 style="color: aliceblue">{{ information }}</h2>
-
+        {% include 'profile_app/user_search.html' %}
     {% else %}
     {% include 'publication_app/posts.html' %}
     {% endif %}
 
 {% else %}
-    <h3>Для просмотра данного раздела нужно авторизоваться или зарегистрировать!</h3>
-    <p><a href="{% url 'login' %}">Авторизация</a></p>
-    <p><a href="{% url 'register' %}">Регистрация</a></p>
+    <h3 style="color: aliceblue">Для просмотра данного раздела нужно авторизоваться или зарегистрироваться!</h3>
+    <p><a href="{% url 'login' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Авторизация</button></a></p>
+    <p><a href="{% url 'register' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Регистрация</button></a></p>
 {% endif %}
 
 

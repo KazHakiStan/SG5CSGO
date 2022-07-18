@@ -106,7 +106,7 @@
                 <div class="col-md" style="color: aliceblue">
                     <summury><h2>Посты пользователя:</h2></summury>
                     <hr>
-                    {% for post in posts %}
+                    {% for post in page_obj %}
                         <div class="card-body">
                             <div class="media">
                             {% for image in post.post_images.all %}
@@ -126,11 +126,27 @@
                             </div>
                         </div>
                     <div class="text-muted" style="color: aliceblue">
-                        <small>Пост создан: {{ post.created_time|date:"F d, Y" }}</small>
+                        <small style="color: aliceblue">Пост создан: {{ post.created_time|date:"F d, Y" }}</small>
                     </div>
                     {% endfor %}
                     <hr>
                 </div>
+            <div class="pagination">
+            <span class="step-links">
+                {% if page_obj.has_previous %}
+                    <a href="?page=1"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Первая</button></a>
+                    <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Предыдущая</button></a>
+                {% endif %}
+
+                <span class="current" style="color: aliceblue">
+                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                </span>
+                {% if page_obj.has_next %}
+                    <a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Следущая</button></a>
+                    <a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Последнаяя</button></a>
+                {% endif %}
+            </span>
+        </div>
             </details>
     </div>
 {% endblock %}

@@ -11,7 +11,8 @@ class Comment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE, related_name='post_comment')
     text = models.CharField(max_length=256, blank=False, verbose_name='Комментарий')
     created_time = models.DateTimeField(auto_now_add=True)
-    likes = GenericRelation(Like)
+    likes = models.ManyToManyField(User, blank=True, related_name='comment_like')
+    dislikes = models.ManyToManyField(User, blank=True, related_name='comment_dislike')
 
     def __str__(self):
         return f'{self.text}'
@@ -20,3 +21,6 @@ class Comment(models.Model):
     def total_likes(self):
         return self.likes.count()
 
+    @property
+    def total_dislikes(self):
+        return self.dislikes.count()

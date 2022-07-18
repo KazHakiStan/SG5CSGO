@@ -1,3 +1,4 @@
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import render
 from django.views import View
@@ -19,12 +20,21 @@ class Profile(View):
 
         waiting = Friendship.objects.filter(receiver=request.user.pk, waiting=True)
 
+        page_obj = None
+
+        if post:
+
+            paginator = Paginator(post, 2)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
+
         context = {
             'title': 'Информация о вашем аккаунте',
             'posts': post,
             'friends': friend,
             'subs': sub,
             'waiting': waiting,
+            'page_obj': page_obj,
         }
 
         return render(request, 'profile_app/my_profile.html', context)

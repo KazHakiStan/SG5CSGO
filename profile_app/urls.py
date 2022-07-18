@@ -7,6 +7,7 @@ from .views.logout import user_logout
 from .views.my_profile import Profile
 from .views.profile import ProfileUserView
 from .views.registration import Register
+from .views.user_search import UserSearchListView
 
 urlpatterns = [
     path('login/', Login.as_view(), name='login'),
@@ -15,4 +16,5 @@ urlpatterns = [
     path('myprofile/', login_required(Profile.as_view(), login_url='login'), name='my_profile'),
     path('profile/<int:pk>', login_required(ProfileUserView.as_view()), name='profile'),
     path('editing/', login_required(EditingProfile.as_view()), name='editing'),
+    path('search/', UserSearchListView.as_view(), name='user_search'),
     ]

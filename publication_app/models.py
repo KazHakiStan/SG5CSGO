@@ -16,7 +16,8 @@ class Post(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='posts')
     file = models.ForeignKey(Media, on_delete=models.SET_NULL, null=True, blank=True)
     tag = models.ManyToManyField(Tag, blank=True, related_name='tag_post')
-    likes = models.ManyToManyField(User, related_name='post_like')
+    likes = models.ManyToManyField(User, blank=True, related_name='post_like')
+    dislikes = models.ManyToManyField(User, blank=True, related_name='post_dislikes')
 
     def __str__(self):
         return f'{self.id}.{self.title}'
@@ -32,6 +33,10 @@ class Post(models.Model):
     @property
     def total_likes(self):
         return self.likes.count()
+
+    @property
+    def total_dislikes(self):
+        return self.dislikes.count()
 
 
 class ImagePost(models.Model):

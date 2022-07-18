@@ -33,6 +33,8 @@ class ProfileUserView(View):
         elif is_friendship.filter(Q(receiver=request.user.pk) & Q(sub=True)):
             is_subscribed = True
 
+
+
         context = {
             'title': f'Профиль {users.username}',
             'users': users,
