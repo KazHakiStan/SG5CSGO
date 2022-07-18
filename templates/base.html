@@ -5,164 +5,105 @@
 <head>
     <meta charset="UTF-8">
     <title>{% block title %}{% endblock %}</title>
-    <link rel="shortcut icon" href="/static/favicon.ico">
-
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-<style>
-body {
-    font-family: "Lato", sans-serif;
-
-}
-
-.slider{
-  width: 800px;
-  height: 500px;
-  border-radius: 10px;
-  overflow: hidden;
-}
-
-.slides{
-  width: 500%;
-  height: 500px;
-  display: flex;
-
-}
-
-.slides input{
-  display: none;
-}
-
-.slide{
-  width: 20%;
-  transition: 2s;
-}
-
-.slide img{
-  width: 800px;
-  height: 500px;
-}
-
-.navigation-manual{
-  position: absolute;
-  width: 300px;
-  margin-top: -40px;
-  display: flex;
-  justify-content: center;
-}
-
-.manual-btn{
-  border: 2px solid aliceblue;
-  padding: 5px;
-  border-radius: 10px;
-  cursor: pointer;
-  transition: 1s;
-}
-
-.manual-btn:not(:last-child){
-  margin-right: 40px;
-}
-
-.manual-btn:hover{
-  background: aliceblue;
-}
-
-#radio1:checked ~ .first{
-  margin-left: 0;
-}
-
-#radio2:checked ~ .first{
-  margin-left: -20%;
-}
-
-#radio3:checked ~ .first{
-  margin-left: -40%;
-}
-
-#radio4:checked ~ .first{
-  margin-left: -60%;
-}
-
-#radio5:checked ~ .first{
-  margin-left: -80%;
-}
-
-{#.navigation-auto{#}
-{#    position: absolute;#}
-{#    display: flex;#}
-{#    width: 800px;#}
-{#    justify-content: center;#}
-{#    margin-top: 460px;#}
-{#}#}
-{##}
-{#.navigation-auto div{#}
-{#    border: 2px solid aliceblue;#}
-{#    padding: 5px;#}
-{#    border-radius: 10px;#}
-{#    transition: 1s;#}
-{#}#}
-{##}
-{#.navigation-auto div:not(:last-child){#}
-{#    margin-right: 40px;#}
-{#}#}
-{##}
-{##radio1:checked ~ .navigation-auto . auto-btn1{#}
-{#    background: aliceblue;#}
-{#}#}
-{##}
-{##radio2:checked ~ .navigation-auto . auto-btn2{#}
-{#    background: aliceblue;#}
-{#}#}
-{##}
-{##radio3:checked ~ .navigation-auto . auto-btn3{#}
-{#    background: aliceblue;#}
-{#}#}
-{##}
-{##radio4:checked ~ .navigation-auto . auto-btn4{#}
-{#    background: aliceblue;#}
-{#}#}
-.sidenav {
-    height: 100%;
-    width: 150px;
-    position: fixed;
-    z-index: 1;
-    top: 0;
-    left: 0;
-    background-color: #111;
-    overflow-x: hidden;
-    padding-top: 20px;
-    opacity: 0.7
-
-}
-
-.sidenav a {
-    padding: 6px 8px 6px 16px;
-    text-decoration: none;
-    font-size: 25px;
-    color: #818181;
-    display: block;
-}
-
-.sidenav a:hover {
-    color: #f1f1f1;
-}
-
-.main {
-    margin-left: 160px; /* Same as the width of the sidenav */
-    font-size: 28px; /* Increased text to enable scrolling */
-    padding: 0px 10px;
-}
-
-@media screen and (max-height: 450px) {
-    .sidenav {padding-top: 15px;}
-    .sidenav a {font-size: 18px;}
-}
-</style>
-
+    <link rel="shortcut icon" id="favicon" href="/static/favicon.ico">
+    <link rel="stylesheet" id="main" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
+    <style>
+        body{
+            font-family: "Lato", sans-serif;
+        }
+        .slider{
+            width: 800px;
+            height: 500px;
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        .slides{
+            width: 500%;
+            height: 500px;
+            display: flex;
+        }
+        .slides input{
+            display: none;
+        }
+        .slide{
+            width: 20%;
+            transition: 2s;
+        }
+        .slide img{
+            width: 800px;
+            height: 500px;
+        }
+        .navigation-manual{
+            position: absolute;
+            width: 300px;
+            margin-top: -40px;
+            display: flex;
+            justify-content: center;
+        }
+        .manual-btn{
+            border: 2px solid aliceblue;
+            padding: 5px;
+            border-radius: 10px;
+            cursor: pointer;
+            transition: 1s;
+        }
+        .manual-btn:not(:last-child){
+            margin-right: 40px;
+        }
+        .manual-btn:hover{
+            background: aliceblue;
+        }
+        #radio1:checked ~ .first{
+            margin-left: 0;
+        }
+        #radio2:checked ~ .first{
+            margin-left: -20%;
+        }
+        #radio3:checked ~ .first{
+            margin-left: -40%;
+        }
+        #radio4:checked ~ .first{
+            margin-left: -60%;
+        }
+        #radio5:checked ~ .first{
+            margin-left: -80%;
+        }
+        .sidenav {
+            height: 100%;
+            width: 150px;
+            position: fixed;
+            z-index: 1;
+            top: 0;
+            left: 0;
+            background-color: #111;
+            overflow-x: hidden;
+            padding-top: 20px;
+            opacity: 0.7
+        }
+        .sidenav a {
+            padding: 6px 8px 6px 16px;
+            text-decoration: none;
+            font-size: 25px;
+            color: #818181;
+            display: block;
+        }
+        .sidenav a:hover {
+            color: #f1f1f1;
+        }
+        .main {
+            margin-left: 160px; /* Same as the width of the sidenav */
+            font-size: 28px; /* Increased text to enable scrolling */
+            padding: 0px 10px;
+        }
+        @media screen and (max-height: 450px) {
+            .sidenav {padding-top: 15px;}
+            .sidenav a {font-size: 18px;}
+        }
+    </style>
 </head>
 <body background="/media/bg/wpbg.jpg" style="background-attachment: fixed;">
     <div id="header" style="background: #111">
         <img id="sg5" src="/media/logo/sg5upd.png" height="150" width="150" style="position:fixed; z-index: 1; background: #111; opacity: 0.7">
-
     </div>
     <div class="sidenav" style="top: 150px">
         {% user_menu %}
@@ -183,7 +124,7 @@ body {
                 </div>
                 <div class="col-4 d-flex justify-content-end align-items-center">
                     {% if user.username %}
-                        <a style="color: aliceblue">Вы вошли как {{ user.username }}</a>
+                        <a style="color: aliceblue">Вы вошли как {{ user.username }} {% if user.profile.photo %}<img src="{{ user.profile.photo.url }}" alt="" height="50px" width="50px" style="border-radius: 25px">{% else %}<img src="/media/staff/avatar_icon.png" alt="" height="50px" width="50px" style="border-radius: 25px">{% endif %}</a>
                     {% else %}
                         <a class="btn btn-sm btn-outline-secondary" href="{% url 'register' %}" style="color: aliceblue; height: 50px;">Стать киберспортсменом</a>
                     {% endif %}
@@ -191,14 +132,13 @@ body {
             </div>
         </header>
     </div>
-<div class="container" style="">{% block content %}{% endblock %}</div>
-<div >
-    <br><br><br><footer class="panel-footer" style="color: aliceblue; position: fixed; bottom: 0; align-content: center; background: #111; width: 100%">
-        <div class="row flex-nowrap justify-content-between align-items-center" style="text-align: center">
-            <p>5ая Ударная Группа / Минск</p>
-        </div>
-        </footer>
-</div>
-
+    <div class="container" style="">{% block content %}{% endblock %}</div>
+    <div>
+        <br><br><br><footer class="panel-footer" style="color: aliceblue; position: fixed; bottom: 0; align-content: center; background: #111; width: 100%">
+            <div class="row flex-nowrap justify-content-between align-items-center" style="text-align: center">
+                <p>5ая Ударная Группа / Минск</p>
+            </div>
+            </footer>
+    </div>
 </body>
 </html>

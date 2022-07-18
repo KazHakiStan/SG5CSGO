@@ -2,113 +2,114 @@
 {% block content %}
     <div style="color: aliceblue">
         <h3>Киберспортсмен: {{ request.user }}</h3>
-
         <p align="right">
             <a href="{% url 'editing'%}">
                 <button type="button" class="btn btn-info">Редактирование профиля</button>
             </a>
         </p>
-    <div>
-    <div>
-    <div class="feature col" style="display: inline-block; position: relative">
-    <hr>
-        {% if request.user.profile.photo %}
-            <img src="{{ request.user.profile.photo.url }}" alt="" width="250px" height="250px">
-        {% else %}
-            <img src="/media/staff/avatar_icon.png" alt="" width="250px" height="250px">
-        {% endif %}
-    </div>
-
-    <div class="feature col" style="display: inline-block; margin-left: 500px;">
-            <details open>
-                <summary ><b style="display: inline-block">Друзья:</b></summary>
-                {% for friend in friends%}
-                    <div style="display: inline-block">
-                    {% if friend.sender == request.user %}
-                        <li >
-                        {% if friend.receiver.profile.photo %}
-                            <img src="{{ friend.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                        {% else %}
-                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                        {% endif %}
-                        <a href="{% url 'profile' friend.receiver.pk%}">
-                            {{ friend.receiver }}
-                        </a>
-                        </li>
-                        {% else %}
-                        <li>
-                        {% if friend.sender.profile.photo%}
-                            <img src="{{ friend.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                        {% else %}
-                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                        {% endif %}
-                        <a href="{% url 'profile' friend.sender.pk%}">
-                            {{ friend.sender }}
-                        </a>
-                        </li>
+        <div>
+            <div>
+                <div class="feature col" style="display: inline-block; position: relative">
+                    <hr>
+                    {% if request.user.profile.photo %}
+                        <img src="{{ request.user.profile.photo.url }}" alt="" width="250px" height="250px">
+                    {% else %}
+                        <img src="/media/staff/avatar_icon.png" alt="" width="250px" height="250px">
+                    {% endif %}
+                </div>
+                <div class="feature col" style="display: inline-block; margin-left: 500px;">
+                    <details open>
+                        <summary ><b style="display: inline-block">Друзья:</b></summary>
+                        <div style="overflow-x: scroll">
+                            {% for friend in friends%}
+                            <div style="display: inline-block">
+                                {% if friend.sender == request.user %}
+                                    <li>
+                                        {% if friend.receiver.profile.photo %}
+                                            <img src="{{ friend.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% else %}
+                                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% endif %}
+                                        <a style="color: aliceblue" href="{% url 'profile' friend.receiver.pk%}">
+                                            {{ friend.receiver }}
+                                        </a>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        {% if friend.sender.profile.photo%}
+                                            <img src="{{ friend.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% else %}
+                                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% endif %}
+                                        <a style="color: aliceblue" href="{% url 'profile' friend.sender.pk%}">
+                                            {{ friend.sender }}
+                                        </a>
+                                    </li>
 {#                        <a href="{% url 'friendship' action='remove' pk=friend.sender.pk %}">#}
 {#                            <button type="button" class="btn btn-danger">Отклонить запрос</button>#}
 {#                        </a>#}
-                    {% endif %}
-                    </div>
-                {% endfor %}
-            </details>
-            <details>
-                <summary><b>Подписки:</b></summary>
-                {% for sub in subs %}
-                    <div style="display: inline-block">
-                        <li>
-                            {% if sub.receiver.profile.photo%}
-                                <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                            {% else %}
-                                <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                            {% endif %}
-                            <a href="{% url 'profile' sub.receiver.pk%}">
-                                {{ sub.receiver }}
-                            </a>
-                        </li>
-                    </div>
-                {% endfor %}
-            </details>
-            <details open>
-                <summary><b>Заявки в друзья:</b></summary>
-                {% for wait in waiting %}
-                <li>
-                    {% if wait.sender.profile.photo %}
-                        <img src="{{ wait.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% else %}
-                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                    {% endif %}
-                    <a href="{% url 'profile' wait.sender.pk%}">
-                        {{ wait.sender }}
-                    </a>
-                </li>
-
-                <a href="{% url 'friendship' action='reject' pk=wait.sender.pk %}">
-                    <button type="button" class="btn btn-danger">Отклонить запрос</button>
-                </a>
-
-                 <a href="{% url 'friendship' action='accept' pk=wait.sender.pk %}">
-                    <button type="button" class="btn btn-success">Принять запрос</button>
-                 </a>
-                {% endfor %}
-            </details>
-    </div>
-
-    </div>
-    </div>
-    <div>
-    <p><b>Имя:</b> {{request.user.first_name}}</p>
+                                {% endif %}
+                            </div>
+                            {% endfor %}
+                        </div>
+                    </details>
+                    <details open>
+                        <summary><b>Подписки:</b></summary>
+                        <div style="overflow-x: scroll">
+                            {% for sub in subs %}
+                                <div style="display: inline-block">
+                                    <li>
+                                        {% if sub.receiver.profile.photo%}
+                                            <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% else %}
+                                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% endif %}
+                                        <a style="color: aliceblue" href="{% url 'profile' sub.receiver.pk%}">
+                                            {{ sub.receiver }}
+                                        </a>
+                                    </li>
+                                </div>
+                            {% endfor %}
+                        </div>
+                    </details>
+                    <details open>
+                        <summary><b>Заявки в друзья:</b></summary>
+                        <div style="overflow-x: scroll">
+                            {% for wait in waiting %}
+                                <li>
+                                    {% if wait.sender.profile.photo %}
+                                        <img src="{{ wait.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                                    {% else %}
+                                        <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                                    {% endif %}
+                                    <a style="color: aliceblue" href="{% url 'profile' wait.sender.pk%}">
+                                        {{ wait.sender }}
+                                    </a>
+                                </li>
+                                <a href="{% url 'friendship' action='reject' pk=wait.sender.pk %}">
+                                    <button type="button" class="btn btn-danger">Отклонить запрос</button>
+                                </a>
+                                 <a href="{% url 'friendship' action='accept' pk=wait.sender.pk %}">
+                                    <button type="button" class="btn btn-success">Принять запрос</button>
+                                 </a>
+                            {% endfor %}
+                        </div>
+                    </details>
+                </div>
+            </div>
+        </div>
+        <div>
+            <p><b>Имя:</b> {{request.user.first_name}}</p>
             <p><b>Фамилия:</b> {{request.user.last_name}}</p>
             <p><b>email:</b> {{request.user.email}}</p>
-    </div>
-            <details open>
-                <div class="col-md" style="color: aliceblue">
-                    <summury><h2>Посты пользователя:</h2></summury>
-                    <hr>
-                    {% for post in page_obj %}
-                        <div class="card-body">
-                            <div class="media">
+        </div>
+        <details open>
+            <summary><h2>Посты пользователя:</h2></summary>
+            <div class="col-md" style="color: aliceblue">
+                <hr>
+                {% for post in page_obj %}
+                    <div class="card-body">
+                        <div class="media">
                             {% for image in post.post_images.all %}
                                 {% if image.image %}
                                     <img src="{{ image.image.url }}" class="mr-3" alt="" width="250px" height="250px" >
@@ -123,30 +124,29 @@
                                     {% endfor%}</p>
                                     <a href="{{ post.get_absolute_url }}" class="btn btn-primary">Открыть пост...</a>
                                 </div>
-                            </div>
                         </div>
+                    </div>
                     <div class="text-muted" style="color: aliceblue">
                         <small style="color: aliceblue">Пост создан: {{ post.created_time|date:"F d, Y" }}</small>
                     </div>
-                    {% endfor %}
-                    <hr>
-                </div>
+                {% endfor %}
+                <hr>
+            </div>
             <div class="pagination">
-            <span class="step-links">
-                {% if page_obj.has_previous %}
-                    <a href="?page=1"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Первая</button></a>
-                    <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Предыдущая</button></a>
-                {% endif %}
-
-                <span class="current" style="color: aliceblue">
-                    Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                <span class="step-links">
+                    {% if page_obj.has_previous %}
+                        <a href="?page=1"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Первая</button></a>
+                        <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Предыдущая</button></a>
+                    {% endif %}
+                    <span class="current" style="color: aliceblue">
+                        Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
+                    </span>
+                    {% if page_obj.has_next %}
+                        <a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Следущая</button></a>
+                        <a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Последнаяя</button></a>
+                    {% endif %}
                 </span>
-                {% if page_obj.has_next %}
-                    <a href="?page={{ page_obj.next_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Следущая</button></a>
-                    <a href="?page={{ page_obj.paginator.num_pages }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Последнаяя</button></a>
-                {% endif %}
-            </span>
-        </div>
-            </details>
+            </div>
+        </details>
     </div>
 {% endblock %}

@@ -1,9 +1,11 @@
 from django.contrib.auth.models import User
+from django.core.paginator import Paginator
 from django.db.models import Q
 from django.shortcuts import get_object_or_404, redirect, render
 from django.views import View
 
 from friends_app.models import Friendship
+from publication_app.models import Post
 
 
 class ProfileUserView(View):
@@ -33,7 +35,14 @@ class ProfileUserView(View):
         elif is_friendship.filter(Q(receiver=request.user.pk) & Q(sub=True)):
             is_subscribed = True
 
+        post = Post.objects.filter(user=users.pk)
 
+        page_obj = None
+
+        if post:
+            paginator = Paginator(post, 2)
+            page_number = request.GET.get('page')
+            page_obj = paginator.get_page(page_number)
 
         context = {
             'title': f'Профиль {users.username}',
@@ -43,5 +52,7 @@ class ProfileUserView(View):
             'is_friend': is_friend,
             'is_subscribed': is_subscribed,
             'is_following': is_following,
+            'page_obj': page_obj,
+            'posts': post
         }
         return render(request, 'profile_app/profile.html', context)

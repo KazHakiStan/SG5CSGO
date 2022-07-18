@@ -1,12 +1,8 @@
-
+{% extends 'base.html' %}
 {% block content %}
 
-{% if not search_list  %}
-<h1 style="color: aliceblue">Пользователя с такими имение не найден </h1>
-<h3 style="color: aliceblue">Попробуйте еще </h3>
-{% endif %}
 
-<ul>
+<ul style="color: aliceblue">
 {% for users in search_list %}
     <li>
         <p>
@@ -24,5 +20,9 @@
     <hr>
 {% endfor %}
 </ul>
-
+{% if not search_list  %}
+<h1 style="color: aliceblue">Пользователь с такими именим не найден </h1>
+<h3 style="color: aliceblue">Попробуйте еще </h3>
+    {% include 'profile_app/search_bar.html' %}
+{% endif %}
 {% endblock %}
