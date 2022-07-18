@@ -1,14 +1,14 @@
 {% extends 'base.html' %}
 
 {% block content %}
-        {% if Error %}
+    {% if Error %}
         <p style="color: aliceblue">{{ Error }}</p>
     {% else %}
-<form method="POST" enctype="multipart/form-data" style="color: aliceblue">
-    {% csrf_token %}
-    {{ form.as_p }}
-<p><input type="submit" value="Добавить пост"></p>
-</form>
-<a style="color: aliceblue" href="{% url 'posts' %}">Отмена добавление поста</a>
+        <form method="POST" enctype="multipart/form-data" style="color: aliceblue">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <p><input type="submit" value="Добавить пост"></p>
+        </form>
+        <a style="color: aliceblue" href="{% url 'posts' %}">Отмена добавление поста</a>
     {% endif %}
 {% endblock %}

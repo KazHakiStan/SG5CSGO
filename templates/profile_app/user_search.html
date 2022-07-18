@@ -1,28 +1,27 @@
 {% extends 'base.html' %}
+
 {% block content %}
-
-
-<ul style="color: aliceblue">
-{% for users in search_list %}
-    <li>
-        <p>
-        {% if users.profile.photo %}
-            <img src="{{ users.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-        {% else %}
-            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-        {% endif %}
-        {{ users.username }}
-        </p>
-        <a href="{% url 'profile' users.pk%}">
-            <button type="button" class="btn btn-secondary btn-sm">Перейти к профилю</button>
-        </a>
-    </li>
-    <hr>
-{% endfor %}
-</ul>
-{% if not search_list  %}
-<h1 style="color: aliceblue">Пользователь с такими именим не найден </h1>
-<h3 style="color: aliceblue">Попробуйте еще </h3>
-    {% include 'profile_app/search_bar.html' %}
-{% endif %}
+    <ul style="color: aliceblue">
+        {% for users in search_list %}
+            <li>
+                <p>
+                {% if users.profile.photo %}
+                    <img src="{{ users.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                {% else %}
+                    <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                {% endif %}
+                {{ users.username }}
+                </p>
+                <a href="{% url 'profile' users.pk%}">
+                    <button type="button" class="btn btn-secondary btn-sm">Перейти к профилю</button>
+                </a>
+            </li>
+            <hr>
+        {% endfor %}
+    </ul>
+    {% if not search_list  %}
+        <h1 style="color: aliceblue">Пользователь с такими именим не найден </h1>
+        <h3 style="color: aliceblue">Попробуйте еще </h3>
+        {% include 'profile_app/search_bar.html' %}
+    {% endif %}
 {% endblock %}

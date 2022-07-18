@@ -1,25 +1,21 @@
 {% extends 'base.html' %}
 
 {% block content %}
-{% if request.user.is_authenticated %}
-<p>
-    <a href="{% url 'new_post'%}">
-        <button type="button" class="btn btn-dark">Добавить пост</button>
-    </a>
-</p>
-
-    {% if information %}
-    <h2 style="color: aliceblue">{{ information }}</h2>
-        {% include 'profile_app/search_bar.html' %}
+    {% if request.user.is_authenticated %}
+        <p>
+            <a href="{% url 'new_post'%}">
+                <button type="button" class="btn btn-dark">Добавить пост</button>
+            </a>
+        </p>
+        {% if information %}
+            <h2 style="color: aliceblue">{{ information }}</h2>
+            {% include 'profile_app/search_bar.html' %}
+        {% else %}
+            {% include 'publication_app/posts.html' %}
+        {% endif %}
     {% else %}
-    {% include 'publication_app/posts.html' %}
+        <h3 style="color: aliceblue">Для просмотра данного раздела нужно авторизоваться или зарегистрироваться!</h3>
+        <p><a href="{% url 'login' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Авторизация</button></a></p>
+        <p><a href="{% url 'register' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Регистрация</button></a></p>
     {% endif %}
-
-{% else %}
-    <h3 style="color: aliceblue">Для просмотра данного раздела нужно авторизоваться или зарегистрироваться!</h3>
-    <p><a href="{% url 'login' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Авторизация</button></a></p>
-    <p><a href="{% url 'register' %}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Регистрация</button></a></p>
-{% endif %}
-
-
 {% endblock %}

@@ -1,92 +1,90 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<article class="alert alert-secondary">
-    <div class="media-body" style="color: black">
-        <div style="display: inline-block;">
-            <h2>Мэм: {{ posts.title }}</h2>
-
-            <div class="article-metadata" style="display: inline-block">
-                <div class="author" style="display: inline-block">
-                    <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>
-                    <a class="mr-2" style="color: black">{{ posts.user.username }}</a>
-                    <small class="text-muted">{{ posts.created_time|date:'F d, Y' }}</small>
+    <article class="alert alert-secondary">
+        <div class="media-body" style="color: black">
+            <div style="display: inline-block;">
+                <h2>Мэм: {{ posts.title }}</h2>
+                <div class="article-metadata" style="display: inline-block">
+                    <div class="author" style="display: inline-block">
+                        <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>
+                        <a class="mr-2" style="color: black">{{ posts.user.username }}</a>
+                        <small class="text-muted">{{ posts.created_time|date:'F d, Y' }}</small>
+                    </div>
                 </div>
             </div>
-        </div>
-        <div class="post-body" style="display: inline-block; ">
-            <div class="images" >
-                {% for image in posts.post_images.all %}
-                    <div style="display: inline-block" >
-                    {% if image.image %}
-                        <img src="{{ image.image.url }}" alt="" width="300px" height="300px"><br>
-                    {% endif %}
-                    </div>
-                {% endfor %}
+            <div class="post-body" style="display: inline-block; ">
+                <div class="images" >
+                    {% for image in posts.post_images.all %}
+                        <div style="display: inline-block" >
+                        {% if image.image %}
+                            <img src="{{ image.image.url }}" alt="" width="300px" height="300px"><br>
+                        {% endif %}
+                        </div>
+                    {% endfor %}
+                </div>
+                <hr>
+                <div class="text">
+                    <p class="article-content">{{ posts.text }}</p>
+                </div>
             </div>
-        <hr>
-            <div class="text">
-                <p class="article-content">{{ posts.text }}</p>
-            </div>
-        </div>
-        <div class="etc">
-            <p>Теги:
-                {% for tag in posts.tag.all %}
-                    {{ tag.tag }},
-                {% endfor %}</p>
-            {% if posts.user_id == user.pk %}
-                <p align="right">
-                    <a href="{% url 'post_red' posts.pk %}"><button type="button" class="btn btn-warning">Редактировать пост</button></a>
-                    <a href="{% url 'post_del' posts.pk %}"><button type="button" class="btn btn-danger">Удалить пост</button></a>
+            <div class="etc">
+                <p>Теги:
+                    {% for tag in posts.tag.all %}
+                        {{ tag.tag }},
+                    {% endfor %}
                 </p>
-            {% endif %}
+                {% if posts.user_id == user.pk %}
+                    <p align="right">
+                        <a href="{% url 'post_red' posts.pk %}"><button type="button" class="btn btn-warning">Редактировать пост</button></a>
+                        <a href="{% url 'post_del' posts.pk %}"><button type="button" class="btn btn-danger">Удалить пост</button></a>
+                    </p>
+                {% endif %}
                 <div style="display: inline-block">
                     <form action="{% url 'like' posts.pk %}" method="POST">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <button type="submit" {% if user.is_fan %}{% endif %}>{{ posts.total_likes }}<img src="/media/likes/like.png" alt="" width="25px" height="25px"></button>
                     </form>
                 </div>
                 <div style="display: inline-block">
                     <form action="{% url 'dislike' posts.pk %}" method="POST">
-                    {% csrf_token %}
+                        {% csrf_token %}
                         <button type="submit">{{ posts.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="25px" height="25px"></button>
                     </form>
                 </div>
-            <p>Комментарии:</p>
-            {% for comment in posts.post_comment.all %}
-                <div >
-                    {% if comment.user.profile.photo %}
-                        <img src="{{ comment.user.profile.photo.url }}" style="border-radius:15px" alt="" width="30px" height="30px" >
-                    {% endif %}
-                    <b>{{ comment.user }}</b>: {{ comment }}
-                </div>
-
-
-                <div>
-                    <div style="display: inline-block">
-                        <form action="{% url 'like_c' comment.pk %}" method="POST">
-                        {% csrf_token %}
-                            <button type="submit" >{{ comment.total_likes }}<img src="/media/likes/like.png" alt="" width="10px" height="10px"></button>
-                        </form>
+                <p>Комментарии:</p>
+                {% for comment in posts.post_comment.all %}
+                    <div>
+                        {% if comment.user.profile.photo %}
+                            <img src="{{ comment.user.profile.photo.url }}" style="border-radius:15px" alt="" width="30px" height="30px" >
+                        {% endif %}
+                        <b>{{ comment.user }}</b>: {{ comment }}
                     </div>
-                    <div style="display: inline-block">
-                        <form action="{% url 'dislike_c' comment.pk %}" method="POST">
-                        {% csrf_token %}
-                            <button type="submit">{{ comment.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="10px" height="10px"></button>
-                        </form>
+                    <div>
+                        <div style="display: inline-block">
+                            <form action="{% url 'like_c' comment.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit" >{{ comment.total_likes }}<img src="/media/likes/like.png" alt="" width="10px" height="10px"></button>
+                            </form>
+                        </div>
+                        <div style="display: inline-block">
+                            <form action="{% url 'dislike_c' comment.pk %}" method="POST">
+                                {% csrf_token %}
+                                <button type="submit">{{ comment.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="10px" height="10px"></button>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                <br>
-                <br>
-            {% endfor %}
-            <form method="post">
-                <div class="form-floating">
-                    {% csrf_token %}
-                    {{ form.as_p }}
-                    <input type="submit" value="Добавить комментарий">
-                </div>
-            </form>
+                    <br>
+                    <br>
+                {% endfor %}
+                <form method="post">
+                    <div class="form-floating">
+                        {% csrf_token %}
+                        {{ form.as_p }}
+                        <input type="submit" value="Добавить комментарий">
+                    </div>
+                </form>
+            </div>
         </div>
-    </div>
-</article>
+    </article>
 {% endblock %}

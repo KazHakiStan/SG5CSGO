@@ -2,9 +2,7 @@
     {% if page_obj %}
         {% for post in page_obj %}
             <article class="alert alert-secondary" style="color: aliceblue">
-
                 <div class="media-body" style="color: aliceblue">
-
                     <div class="article-metadata">
                         <div class="author" style="display: inline-block">
                             <img class="rounded-circle article-img" src="{{ post.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>
@@ -39,7 +37,6 @@
                     <a href="?page=1"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Первая</button></a>
                     <a href="?page={{ page_obj.previous_page_number }}"><button class="btn btn-sm btn-outline-secondary" style="color: aliceblue">Предыдущая</button></a>
                 {% endif %}
-
                 <span class="current" style="color: aliceblue">
                     Страница {{ page_obj.number }} из {{ page_obj.paginator.num_pages }}.
                 </span>
