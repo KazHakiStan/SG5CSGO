@@ -4,7 +4,6 @@
     <article class="alert alert-secondary">
         <div class="media-body" style="color: black">
             <div style="display: inline-block;">
-                <h2>Мэм: {{ posts.title }}</h2>
                 <div class="article-metadata" style="display: inline-block">
                     <div class="author" style="display: inline-block">
                         <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>
@@ -25,6 +24,7 @@
                 </div>
                 <hr>
                 <div class="text">
+                    <h2>{{ posts.title }}</h2><br>
                     <p class="article-content">{{ posts.text }}</p>
                 </div>
             </div>
