@@ -14,7 +14,7 @@ class ProfileUserView(View):
         users = get_object_or_404(User, pk=pk)
 
         if users.pk == request.user.pk:
-            return redirect('profile')
+            return redirect('my_profile')
 
         friend = Friendship.objects.filter(Q(sender=pk) | Q(receiver=pk)).filter(friend=True)
         sub = Friendship.objects.filter(sender=pk, sub=True)

@@ -3,7 +3,7 @@ from django.shortcuts import render, redirect
 from django.views import View
 from django.contrib.auth.models import User
 
-
+from friends_app.models import Friendship
 from ..models import Chat
 from ..forms.chat_form import ChatForm
 
@@ -12,6 +12,9 @@ class ChatView(View):
 
     @staticmethod
     def get(request, pk):
+        friend = Friendship.objects.filter(Q(sender=request.user.pk) | Q(receiver=request.user.pk)). \
+            filter(friend=True)
+        chat_friend = User.objects.get(pk=pk)
         message = Chat.objects.filter(
             (Q(sender=pk) & Q(receiver=request.user.pk)) |
             (Q(sender=request.user.pk) & Q(receiver=pk))
@@ -22,6 +25,8 @@ class ChatView(View):
             'title': f'Чат с пользователем ',
             'message': message,
             'form': form,
+            'friends': friend,
+            'chat_friend': chat_friend
         }
         return render(request, 'chat_app/chat.html', context)
 

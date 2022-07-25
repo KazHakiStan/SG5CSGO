@@ -12,6 +12,12 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 import os
 from pathlib import Path
 
+import django_heroku
+from dotenv import load_dotenv
+
+load_dotenv()
+env_path = Path('.') / '.env'
+load_dotenv(dotenv_path=env_path)
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -20,12 +26,12 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/4.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-8_o0ayk5yg4*7s_)wu0(ew!lw0)n7xiq&1y%0nw9ew5jou*2bp'
+SECRET_KEY = os.getenv('SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
@@ -49,7 +55,9 @@ INSTALLED_APPS = [
     'likes_app',
     'friends_app',
     'chat_app',
+    'rest_framework',
     'drf_spectacular',
+    'django_celery_results',
 ]
 
 MIDDLEWARE = [
@@ -143,3 +151,17 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 REST_FRAMEWORK = {
     'DEFAULT_SCHEMA_CLASS': 'drf_spectacular.openapi.AutoSchema',
 }
+
+EMAIL_HOST = os.getenv('EMAIL_HOST')
+EMAIL_PORT = 587  # Это порт TLS, для SSL порт 465 587
+EMAIL_HOST_USER = os.getenv('EMAIL_HOST_USER')
+EMAIL_HOST_PASSWORD = os.getenv('EMAIL_HOST_PASSWORD')
+EMAIL_USE_TLS = True
+EMAIL_USE_SSL = False
+# EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+
+CELERY_BROKER_URL = 'redis://default:redispw@localhost:49153'
+CELERY_RESULT_BACKEND = 'django-db'
+CELERY_CACHE_BACKEND = 'django-cache'
+
+django_heroku.settings(locals())

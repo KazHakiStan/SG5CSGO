@@ -1,0 +1,5 @@
+{% block content %}
+    Привет ,{{ user.username }},
+    Пожалуйста перейдите по ссылке, чтобы закончить регистрацию
+    http://{{ domain }}{% url 'email' uidb64=uid token=token %}
+{% endblock %}

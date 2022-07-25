@@ -2,14 +2,14 @@
 {% block content %}
     <div style="color: aliceblue">
         <h3>Киберспортсмен: {{ request.user }}</h3>
-        <p align="right">
+        <p>
             <a href="{% url 'editing'%}">
                 <button type="button" class="btn btn-info">Редактирование профиля</button>
             </a>
         </p>
         <div>
             <div>
-                <div class="feature col" style="display: inline-block; position: relative">
+                <div class="feature col" style="display: inline-block; position: absolute">
                     <hr>
                     {% if request.user.profile.photo %}
                         <img src="{{ request.user.profile.photo.url }}" alt="" width="250px" height="250px">
@@ -17,84 +17,92 @@
                         <img src="/media/staff/avatar_icon.png" alt="" width="250px" height="250px">
                     {% endif %}
                 </div>
-                <div class="feature col" style="display: inline-block; margin-left: 500px;">
-                    <details open>
-                        <summary ><b style="display: inline-block">Друзья:</b></summary>
-                        <div style="overflow-x: scroll">
-                            {% for friend in friends%}
-                            <div style="display: inline-block">
+                <div class="feature col" style="display: inline-block; margin-left: 300px">
+                    <b style="display: inline-block">Друзья:</b>
+                    <div style="overflow: auto; border: 1px solid aliceblue; border-radius: 5px; width: 300px; height: 100px">
+                        {% for friend in friends%}
+                            <div style="display: inline-block; margin-left: 10px; margin-top: 10px">
                                 {% if friend.sender == request.user %}
-                                    <li>
+                                    <div>
                                         {% if friend.receiver.profile.photo %}
                                             <img src="{{ friend.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                                         {% else %}
                                             <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                                         {% endif %}
+                                    </div>
+                                    <div >
                                         <a style="color: aliceblue" href="{% url 'profile' friend.receiver.pk%}">
                                             {{ friend.receiver }}
                                         </a>
-                                    </li>
+                                    </div>
                                 {% else %}
-                                    <li>
+                                    <div>
                                         {% if friend.sender.profile.photo%}
                                             <img src="{{ friend.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                                         {% else %}
                                             <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                                         {% endif %}
+                                    </div>
+                                    <div>
                                         <a style="color: aliceblue" href="{% url 'profile' friend.sender.pk%}">
                                             {{ friend.sender }}
                                         </a>
-                                    </li>
+                                    </div>
 {#                        <a href="{% url 'friendship' action='remove' pk=friend.sender.pk %}">#}
 {#                            <button type="button" class="btn btn-danger">Отклонить запрос</button>#}
 {#                        </a>#}
                                 {% endif %}
                             </div>
-                            {% endfor %}
-                        </div>
-                    </details>
-                    <details open>
-                        <summary><b>Подписки:</b></summary>
-                        <div style="overflow-x: scroll">
-                            {% for sub in subs %}
-                                <div style="display: inline-block">
-                                    <li>
-                                        {% if sub.receiver.profile.photo%}
-                                            <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
-                                        {% else %}
-                                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
-                                        {% endif %}
-                                        <a style="color: aliceblue" href="{% url 'profile' sub.receiver.pk%}">
-                                            {{ sub.receiver }}
-                                        </a>
-                                    </li>
-                                </div>
-                            {% endfor %}
-                        </div>
-                    </details>
-                    <details open>
-                        <summary><b>Заявки в друзья:</b></summary>
-                        <div style="overflow-x: scroll">
-                            {% for wait in waiting %}
-                                <li>
-                                    {% if wait.sender.profile.photo %}
-                                        <img src="{{ wait.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                        {% endfor %}
+                    </div>
+                    <b>Подписки:</b>
+                    <div style="overflow: auto; border: 1px solid aliceblue; border-radius: 5px; width: 300px; height: 100px">
+                        {% for sub in subs %}
+                            <div style="display: inline-block; margin-left: 10px; margin-top: 10px">
+                                <div>
+                                    {% if sub.receiver.profile.photo%}
+                                        <img src="{{ sub.receiver.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
                                     {% else %}
                                         <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
                                     {% endif %}
-                                    <a style="color: aliceblue" href="{% url 'profile' wait.sender.pk%}">
-                                        {{ wait.sender }}
+                                </div>
+                                <div>
+                                    <a style="color: aliceblue" href="{% url 'profile' sub.receiver.pk%}">
+                                        {{ sub.receiver }}
                                     </a>
-                                </li>
-                                <a href="{% url 'friendship' action='reject' pk=wait.sender.pk %}">
-                                    <button type="button" class="btn btn-danger">Отклонить запрос</button>
-                                </a>
-                                 <a href="{% url 'friendship' action='accept' pk=wait.sender.pk %}">
-                                    <button type="button" class="btn btn-success">Принять запрос</button>
-                                 </a>
-                            {% endfor %}
-                        </div>
-                    </details>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
+                    <b>Заявки в друзья:</b>
+                    <div style="overflow: auto; border: 1px solid aliceblue; border-radius: 5px; width: 400px; height: 100px">
+                        {% for wait in waiting %}
+                            <div style="display: inline-block; margin-left: 10px; margin-top: 10px">
+                                <div style="display: inline-block">
+                                    <div>
+                                        {% if wait.sender.profile.photo %}
+                                            <img src="{{ wait.sender.profile.photo.url }}" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% else %}
+                                            <img src="/media/staff/avatar_icon.png" style="border-radius:10px" alt="" width="50px" height="50px">
+                                        {% endif %}
+                                    </div>
+                                    <div>
+                                        <a style="color: aliceblue" href="{% url 'profile' wait.sender.pk%}">
+                                            {{ wait.sender }}
+                                        </a>
+                                    </div>
+                                </div>
+                                <div style="display: inline-block">
+                                    <a href="{% url 'friendship' action='reject' pk=wait.sender.pk %}">
+                                        <button type="button" class="btn btn-danger">Отклонить запрос</button>
+                                    </a>
+                                    <a href="{% url 'friendship' action='accept' pk=wait.sender.pk %}">
+                                        <button type="button" class="btn btn-success">Принять запрос</button>
+                                    </a>
+                                </div>
+                            </div>
+                        {% endfor %}
+                    </div>
                 </div>
             </div>
         </div>
@@ -103,7 +111,7 @@
             <p><b>Фамилия:</b> {{request.user.last_name}}</p>
             <p><b>email:</b> {{request.user.email}}</p>
         </div>
-        <details open>
+        <details>
             <summary><h2>Посты пользователя:</h2></summary>
             <div class="col-md" style="color: aliceblue">
                 <hr>

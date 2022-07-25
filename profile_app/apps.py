@@ -7,3 +7,4 @@ class ProfileAppConfig(AppConfig):
 
     def ready(self):
         import profile_app.signals.registration
+        import profile_app.signals.old_image

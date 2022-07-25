@@ -27,7 +27,7 @@ def friendship(request, action, pk):
         if friend:
             friend.waiting = False
             friend.save()
-            return redirect('profile')
+            return redirect('my_profile')
 
     elif action == 'remove':
         friend = Friendship.objects.filter((Q(sender=pk) & Q(receiver=request.user.pk)) |
