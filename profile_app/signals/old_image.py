@@ -8,7 +8,6 @@ from profile_app.models import Profile
 def old_image(sender, instance, **kwargs):
     if not instance.pk:
         return False
-    # Проверяем наличие фотографии
     if sender.objects.get(pk=instance.pk).photo:
 
         image_old = sender.objects.get(pk=instance.pk).photo
@@ -16,8 +15,7 @@ def old_image(sender, instance, **kwargs):
         image_new = instance.photo
 
         if image_old != image_new:
-            # Если фотография новая, то проверяем путь и затем удаляем
             if os.path.isfile(image_old.path):
-                os.remove(image_new.path)
+                os.remove(image_old.path)
         else:
             return False
