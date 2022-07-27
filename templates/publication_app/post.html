@@ -60,6 +60,7 @@
                         {% endif %}
                         <b>{{ comment.user }}</b>: {{ comment }}
                     </div>
+                    <a href="{% url 'comment_del' comment.pk %}"><button type="button" class="btn btn-danger">Удалить комментарий</button></a>
                     <div>
                         <div style="display: inline-block">
                             <form action="{% url 'like_c' comment.pk %}" method="POST">

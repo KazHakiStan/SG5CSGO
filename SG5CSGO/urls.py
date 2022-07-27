@@ -31,6 +31,7 @@ urlpatterns = [
     path('', include('friends_app.urls')),
     path('', include('chat_app.urls')),
     path('', include('likes_app.urls')),
+    path('', include('comments_app.urls')),
     path("favicon.ico", RedirectView.as_view(url=staticfiles_storage.url("favicon.ico")),),
     path('api/schema/', SpectacularAPIView.as_view(), name='schema'),
     path('api/schema/swagger-ui/', SpectacularSwaggerView.as_view(url_name='schema'), name='swagger-ui'),

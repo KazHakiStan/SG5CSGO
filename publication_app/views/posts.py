@@ -3,6 +3,7 @@ from django.db.models import Q
 from django.shortcuts import render
 from django.views import View
 
+from comments_app.forms.new_comment import AddCommentsForm
 from friends_app.models import Friendship
 from publication_app.models import Post
 from tags_app.models import Tag
@@ -14,6 +15,7 @@ class Posts(View):
     def get(request):
         friendship = Friendship.objects.filter(Q(sender=request.user.pk) |
                                                (Q(receiver=request.user.pk) & Q(friend=True)))
+        form = AddCommentsForm()
         users = []
 
         for friend in friendship:
@@ -38,7 +40,8 @@ class Posts(View):
                     'posts': posts,
                     'tag': tags,
                     'information': None,
-                    'page_obj': page_obj
+                    'page_obj': page_obj,
+                    'form': form
                 }
 
             else:
