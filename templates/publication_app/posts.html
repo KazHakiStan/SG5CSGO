@@ -8,11 +8,12 @@
                             <img class="rounded-circle article-img" src="{{ post.user.profile.photo.url }}" alt="" width="60px" height="60px"><br>
                         </div>
                         <div style="display: inline-block; margin-left: 8px">
-                            <a class="mr-2" href="{{ post.user.profile.get_absolute_url }}" style="color: aliceblue; ">{{ post.user }}</a><br>
+                            <a class="mr-2" href="{% url 'profile' post.user.pk %}" style="color: aliceblue; text-decoration: none">{{ post.user }}</a>
                             <small class="text-muted">{{ post.created_time|date:"F d, Y" }}</small>
                         </div>
+                        <hr>
                         <div class="title" style="margin-top: 8px">
-                            <h3><a class="article-title" href="{{ post.get_absolute_url }}" style="color: aliceblue;">{{ post.title }}</a></h3>
+                            <h3><a class="article-title" href="{{ post.get_absolute_url }}" style="color: aliceblue; text-decoration: none">{{ post.title }}</a></h3>
                         </div>
                         <hr>
                     </div>
@@ -25,7 +26,7 @@
                         {% for image in post.post_images.all %}
                             <div id="maximized" style="display: inline-block">
                                 {% if image.image %}
-                                    <img src="{{ image.image.url }}" alt="" width="200px" height="200px">
+                                    <img src="{{ image.image.url }}" alt="" width="30%" height="30%">
                                 {% endif %}
                             </div>
                         {% endfor %}

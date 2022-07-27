@@ -15,8 +15,10 @@
             margin-right: 150px;
             margin-left: 150px;
             max-width: 1620px;
-            width: 1560px
-
+            width: 1560px;
+            position: relative;
+            z-index: 0;
+            margin-top: 100px;
         }
         .slider{
             width: 800px;
@@ -122,24 +124,24 @@
             transition-delay: 0.5s
         }
         #maximized:hover img {
-            width: 470px;
-            height: 470px;
+            width: 100%;
+            height: 100%;
         }
 
     </style>
 </head>
 <body background="/media/bg/wpbg.jpg" style="background-attachment: fixed; overflow-y: auto">
-    <div style="background: #111;">
-        <img id="sg5" src="/media/logo/sg5upd.png" alt="" height="150" width="150" style="position:fixed; z-index: 1; background: #111;">
-    </div>
-    <div class="sidenav" style="top: 150px">
+    <div class="sidenav">
+        <div style="background: #111;">
+            <img id="sg5" src="/media/logo/sg5upd.png" alt="" height="150" width="150" style="background: #111;">
+        </div>
         {% user_menu %}
         {% main_menu %}
     </div>
     <div class="sidenavr">
 
     </div>
-    <div style="color: aliceblue; position: relative; z-index: 0; padding-left: 0; padding-right: 0">
+    <div style="color: aliceblue; position: fixed; z-index: 1; top: 0; width: 100%">
         <header class="blog-header lh-1 py-3" style="background-color: #111; top: 0; margin-left: 150px; margin-right: 150px;">
             <div class="row flex-nowrap justify-content-between align-items-center" style="width: 100%">
                 <div class="col-4 pt-1">

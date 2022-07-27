@@ -1,90 +1,103 @@
 {% extends 'base.html' %}
 
 {% block content %}
-    <article class="alert alert-secondary">
-        <div class="media-body" style="color: black">
-            <div style="display: inline-block;">
-                <div class="article-metadata" style="display: inline-block">
-                    <div class="author" style="display: inline-block">
-                        <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="150px" height="150px"><br>
-                        <a class="mr-2" style="color: black">{{ posts.user.username }}</a>
-                        <small class="text-muted">{{ posts.created_time|date:'F d, Y' }}</small>
-                    </div>
+    <article class="alert alert-secondary" style="background: #0b0b0b; color: aliceblue; top: 0; height: auto; max-width: 500px; margin-left: 500px;">
+        <div class="media-body" style="color: aliceblue">
+            <div class="article-metadata">
+                <div class="author" style="display: inline-block">
+                    <img class="rounded-circle article-img" src="{{ posts.user.profile.photo.url }}" alt="" width="60px" height="60px"><br>
                 </div>
-            </div>
-            <div class="post-body" style="display: inline-block; ">
-                <div class="images" >
-                    {% for image in posts.post_images.all %}
-                        <div style="display: inline-block" >
-                        {% if image.image %}
-                            <img src="{{ image.image.url }}" alt="" width="300px" height="300px"><br>
-                        {% endif %}
-                        </div>
-                    {% endfor %}
+                <div style="display: inline-block; margin-left: 8px">
+                    <a class="mr-2" href="{% url 'profile' posts.user.pk %}" style="color: aliceblue; text-decoration: none">{{ posts.user.username }}</a>
+                    <small class="text-muted">{{ posts.created_time|date:'F d, Y' }}</small>
+                </div>
+                <div class="options" style="display: inline-block">
+                    {% if posts.user_id == user.pk %}
+                        <p align="right">
+                            <a href="{% url 'post_red' posts.pk %}"><button type="button" class="btn btn-warning">Редактировать</button></a>
+                            <a href="{% url 'post_del' posts.pk %}"><button type="button" class="btn btn-danger">Удалить</button></a>
+                        </p>
+                    {% endif %}
                 </div>
                 <hr>
-                <div class="text">
-                    <h2>{{ posts.title }}</h2><br>
-                    <p class="article-content">{{ posts.text }}</p>
+                <div class="title" style="margin-top: 8px">
+                    <h3><a class="article-title" href="{{ posts.get_absolute_url }}" style="color: aliceblue; text-decoration: none">{{ posts.title }}</a></h3>
                 </div>
+                <hr>
             </div>
-            <div class="etc">
-                <p>Теги:
-                    {% for tag in posts.tag.all %}
-                        {{ tag.tag }},
-                    {% endfor %}
+            <div>
+                <p>
+                    {{ posts.text }}
                 </p>
-                {% if posts.user_id == user.pk %}
-                    <p align="right">
-                        <a href="{% url 'post_red' posts.pk %}"><button type="button" class="btn btn-warning">Редактировать пост</button></a>
-                        <a href="{% url 'post_del' posts.pk %}"><button type="button" class="btn btn-danger">Удалить пост</button></a>
-                    </p>
-                {% endif %}
-                <div style="display: inline-block">
-                    <form action="{% url 'like' posts.pk %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit" {% if user.is_fan %}{% endif %}>{{ posts.total_likes }}<img src="/media/likes/like.png" alt="" width="25px" height="25px"></button>
-                    </form>
-                </div>
-                <div style="display: inline-block">
-                    <form action="{% url 'dislike' posts.pk %}" method="POST">
-                        {% csrf_token %}
-                        <button type="submit">{{ posts.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="25px" height="25px"></button>
-                    </form>
-                </div>
-                <p>Комментарии:</p>
-                {% for comment in posts.post_comment.all %}
-                    <div>
-                        {% if comment.user.profile.photo %}
-                            <img src="{{ comment.user.profile.photo.url }}" style="border-radius:15px" alt="" width="30px" height="30px" >
+            </div>
+            <div class="images">
+                {% for image in posts.post_images.all %}
+                    <div id="maximized" style="display: inline-block" >
+                        {% if image.image %}
+                            <img src="{{ image.image.url }}" alt="" width="30%" height="30%"><br>
                         {% endif %}
-                        <b>{{ comment.user }}</b>: {{ comment }}
                     </div>
-                    <a href="{% url 'comment_del' comment.pk %}"><button type="button" class="btn btn-danger">Удалить комментарий</button></a>
-                    <div>
-                        <div style="display: inline-block">
-                            <form action="{% url 'like_c' comment.pk %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit" >{{ comment.total_likes }}<img src="/media/likes/like.png" alt="" width="10px" height="10px"></button>
-                            </form>
-                        </div>
-                        <div style="display: inline-block">
-                            <form action="{% url 'dislike_c' comment.pk %}" method="POST">
-                                {% csrf_token %}
-                                <button type="submit">{{ comment.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="10px" height="10px"></button>
-                            </form>
-                        </div>
-                    </div>
-                    <br>
-                    <br>
                 {% endfor %}
-                <form method="post">
-                    <div class="form-floating">
-                        {% csrf_token %}
-                        {{ form.as_p }}
-                        <input type="submit" value="Добавить комментарий">
+            </div>
+            <hr>
+            <div class="etc">
+                <div class="likes" style="display: inline-block">
+                    <div style="display: inline-block">
+                        <form action="{% url 'like' posts.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit" {% if user.is_fan %}{% endif %}>{{ posts.total_likes }}<img src="/media/likes/like.png" alt="" width="25px" height="25px"></button>
+                        </form>
                     </div>
-                </form>
+                    <div style="display: inline-block">
+                        <form action="{% url 'dislike' posts.pk %}" method="POST">
+                            {% csrf_token %}
+                            <button type="submit">{{ posts.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="25px" height="25px"></button>
+                        </form>
+                    </div>
+                </div>
+                <div class="tags" style="display: inline-block">
+                    <p>
+                        {% for tag in posts.tag.all %}
+                            <a href="" style="text-decoration: none; color: aliceblue">{{ tag.tag }}</a>,
+                        {% endfor %}
+                    </p>
+                </div>
+                <div class="comments">
+                    {% for comment in posts.post_comment.all %}
+                        <div>
+                            {% if comment.user.profile.photo %}
+                                <img src="{{ comment.user.profile.photo.url }}" style="border-radius:15px" alt="" width="30px" height="30px" >
+                            {% endif %}
+                            <b>{{ comment.user }}</b>: {{ comment }}
+                        </div>
+                        {% if comment.user_id == user.pk %}
+                            <a href="{% url 'comment_del' comment.pk %}"><button type="button" class="btn btn-danger">Удалить</button></a>
+                        {% endif %}
+                        <div>
+                            <div style="display: inline-block">
+                                <form action="{% url 'like_c' comment.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit" >{{ comment.total_likes }}<img src="/media/likes/like.png" alt="" width="10px" height="10px"></button>
+                                </form>
+                            </div>
+                            <div style="display: inline-block">
+                                <form action="{% url 'dislike_c' comment.pk %}" method="POST">
+                                    {% csrf_token %}
+                                    <button type="submit">{{ comment.total_dislikes }}<img src="/media/likes/dislike.png" alt="" width="10px" height="10px"></button>
+                                </form>
+                            </div>
+                        </div>
+                        <br>
+                        <br>
+                    {% endfor %}
+                    <form method="post">
+                        <div class="form-floating">
+                            {% csrf_token %}
+                            {{ form.as_p }}
+                            <input type="submit" value="Добавить комментарий">
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
     </article>

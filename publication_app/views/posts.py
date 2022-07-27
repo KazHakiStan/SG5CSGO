@@ -16,7 +16,7 @@ class Posts(View):
         friendship = Friendship.objects.filter(Q(sender=request.user.pk) |
                                                (Q(receiver=request.user.pk) & Q(friend=True)))
         form = AddCommentsForm()
-        users = []
+        users = [request.user.pk]
 
         for friend in friendship:
 
@@ -26,9 +26,9 @@ class Posts(View):
             if friend.receiver.pk not in users:
                 users.append(friend.receiver.pk)
 
-        if friendship:
+        if users:
             tags = Tag.objects.all()
-            posts = Post.objects.filter(is_public=True)
+            posts = Post.objects.filter(is_public=True).filter(user__in=users)
             if posts:
 
                 paginator = Paginator(posts, 3)
